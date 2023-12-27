@@ -1,0 +1,36 @@
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100%;
+  background-color: var(--sidebar-bgc);
+}
+
+.profile {
+  width: 100%;
+  display: grid;
+  gap: 15px;
+  align-items: center;
+  grid-template-columns: 50px auto 25px;
+  padding: 15px;
+
+  &-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  &-userName {
+    position: relative;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1.25rem;
+  }
+
+  &-pen {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    
+  }
+}

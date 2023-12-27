@@ -1,28 +1,4 @@
-<div class="wrapper">
-  <div class="container">
-    <div #messageContainer class="container-messages">
-      @for (msg of messages; track $index) {
-      <div
-        class="container-messages-box"
-        [ngClass]="{
-          'container-messages-box-sender': msg?.senderId === user?.id
-        }"
-      >
-        <p class="container-messages-box-senderUser">
-          {{ msg?.sender?.["userName"] }}
-        </p>
-        <p class="container-messages-box-body">{{ msg?.body }}</p>
-      </div>
-      }
-    </div>
-    <div class="container-controls">
-      <input
-        [(ngModel)]="body"
-        class="container-controls-input"
-        type="text"
-        maxlength="256"
-      />
-      <button (click)="write()" class="container-controls-btn"><</button>
-    </div>
-  </div>
-</div>
+<main class="wrapper">
+  <sidebar-comp class="sidebar-comp"></sidebar-comp>
+  <chat-comp class="chat-comp"></chat-comp>
+</main>

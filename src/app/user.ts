@@ -1,11 +1,10 @@
+import { Chat } from './chat';
+
 export class User {
   constructor(
+    public userId: string,
     public userName: string,
     private password: string,
-    private userId: string
+    public chats: Chat[]
   ) {}
-
-  get id() {
-    return this.userId;
-  }
 }

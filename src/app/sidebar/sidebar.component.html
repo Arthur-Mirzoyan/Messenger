@@ -1,0 +1,15 @@
+<aside class="sidebar">
+  <div class="profile">
+    <img
+      class="profile-photo"
+      src="assets/img/no-profile-picture-icon-male.jpg"
+    />
+    <p class="profile-userName">{{ appService.user.userName }}</p>
+    <img class="profile-pen" src="assets/svg/pen-write.svg" />
+  </div>
+  <div class="chats">
+    @for (chat of appService.user.chats; track $index) {
+    <h2>{{ chat.name }}</h2>
+    }
+  </div>
+</aside>

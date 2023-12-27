@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RegistrationService } from './registration.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'registration-comp',
@@ -16,6 +17,7 @@ export class RegistrationComponent {
   public password: string = '';
 
   constructor(
+    public appService: AppService,
     private registrationService: RegistrationService,
     private router: Router
   ) {}
@@ -27,8 +29,10 @@ export class RegistrationComponent {
     );
 
     if (userExists.length) {
-      localStorage.setItem('userId', userExists[0]?.id);
-      this.router.navigate(['/']);
+      const userId = userExists[0].userId;
+      localStorage.setItem('userId', userId);
+      this.appService.user.userId = userId;
+      this.router.navigate(['/chats']);
     }
   }
 }

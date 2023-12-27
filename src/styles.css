@@ -1,5 +1,8 @@
 :root {
   --controls-height: 50px;
+  --sidebar-width: 350px;
+
+  --sidebar-bgc: #d3d0ee;
 }
 
 * {

@@ -3,7 +3,7 @@ import { database } from './database/connection';
 import { User } from './user';
 
 export class Message {
-  public sender: User = new User('', '', '');
+  public sender: User = new User('', '', '', []);
   constructor(
     public id: string,
     public body: string,
@@ -19,7 +19,12 @@ export class Message {
     const user = docSnap.data();
 
     if (user) {
-      this.sender = new User(user['userName'], user['password'], this.senderId);
+      this.sender = new User(
+        this.senderId,
+        user['userName'],
+        user['password'],
+        user['chats']
+      );
     }
   }
 }

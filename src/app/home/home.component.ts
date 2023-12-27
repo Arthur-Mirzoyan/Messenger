@@ -1,59 +1,35 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Message } from '../message';
-import { HomeService } from './home.service';
 import { User } from '../user';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { Router } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'home-comp',
   standalone: true,
   templateUrl: 'home.component.html',
   styleUrl: 'home.component.scss',
-  imports: [FormsModule, NgClass],
-  providers: [HomeService],
+  imports: [FormsModule, NgClass, NgIf, SidebarComponent, ChatComponent],
 })
 export class HomeComponent {
-  public id: string = '';
-  public body: string = '';
-  public messages: Message[] = [];
-  public user: User | null = null;
+  protected user: User | null = null;
 
-  @ViewChild('messageContainer')
-  private messageContainer!: ElementRef;
-
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private appService: AppService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.homeService.getUser().then((user) => (this.user = user));
-    this.readMessages();
-  }
-
-  ngAfterViewChecked() {
-    this.scrollToBottom();
-  }
-
-  private readMessages() {
-    this.homeService.onChange((data: []) => {
-      console.log(data);
-      this.messages = data
-        .reverse()
-        .map(
-          (item: any) =>
-            new Message(item?.id, item?.body, item?.senderId, item?.createdAt)
-        );
+    this.appService.getUser((user: any) => {
+      console.log(user)
+      if (!user) this.router.navigate(['/login']);
+      else {
+        this.user = user;
+        this.appService.user = user;
+      }
     });
-  }
-
-  write() {
-    this.homeService.writeUserData(this.body);
-    this.body = '';
-  }
-
-  private scrollToBottom(): void {
-    try {
-      this.messageContainer.nativeElement.scrollTop =
-        this.messageContainer.nativeElement.scrollHeight;
-    } catch (err) {}
   }
 }

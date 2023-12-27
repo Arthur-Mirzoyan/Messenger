@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="container-group">
+    <p class="container-group-name">Group Name</p>
+  </div>
+  <div #messageContainer class="container-messages">
+    @for (msg of messages; track $index) {
+    <div
+      class="container-messages-box"
+      [ngClass]="{
+        'container-messages-box-sender':
+          msg?.senderId === appService.user.userId
+      }"
+    >
+      <p
+        *ngIf="msg?.senderId !== appService.user.userId"
+        class="container-messages-box-senderUser"
+      >
+        {{ msg?.sender?.["userName"] }}
+      </p>
+      <p class="container-messages-box-body">{{ msg?.body }}</p>
+    </div>
+    }
+  </div>
+  <div class="container-controls">
+    <input
+      [(ngModel)]="body"
+      class="container-controls-input"
+      type="text"
+      maxlength="256"
+      (keyup.enter)="write()"
+    />
+    <button (click)="write()" class="container-controls-btn"><</button>
+  </div>
+</div>
