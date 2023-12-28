@@ -1,9 +1,10 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Message } from '../message';
 import { AppService } from '../app.service';
 import { ChatService } from './chat.service';
+import { Chat } from '../chat';
 
 @Component({
   selector: 'chat-comp',
@@ -26,10 +27,6 @@ export class ChatComponent {
     private chatService: ChatService
   ) {}
 
-  ngOnInit() {
-    this.readMessages();
-  }
-
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
@@ -42,15 +39,6 @@ export class ChatComponent {
       );
       this.body = '';
     }
-  }
-
-  private readMessages() {
-    this.chatService.onChange((data: []) => {
-      this.messages = data.map(
-        (item: any) =>
-          new Message(item?.id, item?.body, item?.senderId, item?.createdAt)
-      );
-    });
   }
 
   private scrollToBottom(): void {

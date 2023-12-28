@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from './user';
-import { doc, getDoc } from 'firebase/firestore';
+import { Unsubscribe, doc, getDoc } from 'firebase/firestore';
 import { database } from './database/connection';
 import { Chat } from './chat';
 
@@ -8,7 +8,10 @@ import { Chat } from './chat';
   providedIn: 'root',
 })
 export class AppService {
-  public user: User = new User('', '', '', []);
+  public user: User = new User('', '', '', [], null);
+  public currentChat: Chat = new Chat('', '', '', []);
+  public isChatSelected = false;
+  public snapShotUnsubsribe!: Unsubscribe;
 
   getUser(callback: Function) {
     if (this.user.userId) {
@@ -27,7 +30,8 @@ export class AppService {
           userSnap.id,
           userData?.['userName'],
           userData?.['password'],
-          chatDatas
+          chatDatas,
+          null
         );
 
         callback(user);
@@ -44,7 +48,8 @@ export class AppService {
       const chat = new Chat(
         chatSnap.id,
         chatData?.['name'],
-        chatData?.['ownerId']
+        chatData?.['ownerId'],
+        []
       );
       callback(chat);
     });

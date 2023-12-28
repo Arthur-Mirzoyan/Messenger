@@ -18,7 +18,7 @@ export class HomeComponent {
   protected user: User | null = null;
 
   constructor(
-    private appService: AppService,
+    protected appService: AppService,
     private router: Router
   ) {}
 

@@ -8,8 +8,16 @@
     <img class="profile-pen" src="assets/svg/pen-write.svg" />
   </div>
   <div class="chats">
-    @for (chat of appService.user.chats; track $index) {
-    <h2>{{ chat.name }}</h2>
-    }
+    <div class="chats-create">
+      <input [(ngModel)]="newChatName" class="chats-create-input" type="text" />
+      <button (click)="createChat()" class="chats-create-btn">Create</button>
+    </div>
+    <div class="chats-container">
+      @for (chat of appService.user.chats; track $index) {
+      <button (click)="moveToChat(chat)" class="chats-container-btn">
+        {{ chat.name }}
+      </button>
+      }
+    </div>
   </div>
 </aside>

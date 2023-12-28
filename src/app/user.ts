@@ -5,6 +5,7 @@ export class User {
     public userId: string,
     public userName: string,
     private password: string,
-    public chats: Chat[]
+    public chats: Chat[],
+    public currentChat: Chat | null
   ) {}
 }

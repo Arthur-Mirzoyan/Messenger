@@ -17,7 +17,7 @@ export class RegistrationService {
       const result: User[] = [];
 
       response.forEach((user) => {
-        result.push(new User(user.id, userName, password, []));
+        result.push(new User(user.id, userName, password, [], null));
       });
 
       return result;

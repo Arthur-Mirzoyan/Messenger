@@ -7,7 +7,7 @@ import { HomeComponent } from './home/home.component';
 const appRoutes: Routes = [
   { path: 'chats', component: HomeComponent },
   { path: 'login', component: RegistrationComponent },
-  // { path: '**', redirectTo: 'login' },
+  { path: '**', redirectTo: 'login' },
 ];
 
 export const appConfig: ApplicationConfig = {

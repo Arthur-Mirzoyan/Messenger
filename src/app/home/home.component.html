@@ -1,4 +1,6 @@
 <main class="wrapper">
   <sidebar-comp class="sidebar-comp"></sidebar-comp>
+  @if (appService.isChatSelected) {
   <chat-comp class="chat-comp"></chat-comp>
+  }
 </main>
