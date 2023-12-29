@@ -1,0 +1,47 @@
+<aside class="panel">
+  <div class="container">
+    <div class="chatData">
+      <legend title="{{ appService.currentChat.name }}" class="chatData-name">
+        {{ appService.currentChat.name }}
+      </legend>
+      <p class="chatData-owner">Owner : {{ appService.user.userName }}</p>
+    </div>
+    <div class="members">
+      <div class="members-header">
+        <legend class="members-header-legend">Members</legend>
+        <button (click)="openAddMemberDialog()" class="members-header-addIcon">
+          <img src="assets/svg/add-member.svg" />
+        </button>
+      </div>
+      @for(member of appService.currentChat.getMembers; track $index){
+      <div class="members-box">
+        <div class="members-box-img">
+          <img src="assets/img/no-profile-picture-icon-male.jpg" />
+        </div>
+        <p class="members-box-name">{{ member.userName }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</aside>
+<dialog #addMemberDialog class="dialog">
+  <div class="dialog-box">
+    <input
+      type="text"
+      placeholder="Enter UserName"
+      [(ngModel)]="newMemberUserName"
+      class="dialog-box-input"
+    />
+    <div class="dialog-box-controls">
+      <button (click)="addMember()" class="dialog-box-controls-btn add">
+        Add
+      </button>
+      <button
+        (click)="closeAddMemberDialog()"
+        class="dialog-box-controls-btn cancel"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</dialog>

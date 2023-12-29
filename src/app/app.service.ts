@@ -8,8 +8,8 @@ import { Chat } from './chat';
   providedIn: 'root',
 })
 export class AppService {
-  public user: User = new User('', '', '', [], null);
-  public currentChat: Chat = new Chat('', '', '', []);
+  public user: User = new User('', '', '');
+  public currentChat: Chat = new Chat('', '', '');
   public isChatSelected = false;
   public snapShotUnsubsribe!: Unsubscribe;
 
@@ -30,8 +30,7 @@ export class AppService {
           userSnap.id,
           userData?.['userName'],
           userData?.['password'],
-          chatDatas,
-          null
+          chatDatas
         );
 
         callback(user);
@@ -49,7 +48,7 @@ export class AppService {
         chatSnap.id,
         chatData?.['name'],
         chatData?.['ownerId'],
-        []
+        chatData?.['members']
       );
       callback(chat);
     });

@@ -3,7 +3,7 @@ import { database } from './database/connection';
 import { User } from './user';
 
 export class Message {
-  public sender: User = new User('', '', '', [], null);
+  public sender: User = new User('', '', '');
   constructor(
     public id: string,
     public body: string,
@@ -23,8 +23,7 @@ export class Message {
         this.senderId,
         user['userName'],
         user['password'],
-        user['chats'],
-        null
+        user['chats']
       );
     }
   }

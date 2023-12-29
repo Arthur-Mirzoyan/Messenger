@@ -1,5 +1,41 @@
 .reg-form {
-  width: clamp(250px, 90%, 450px);
+  width: clamp(250px, 90%, 400px);
   display: flex;
   flex-direction: column;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  gap: 10px;
+  padding: 10px;
+
+  &-legend {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  &-input {
+    padding: 10px 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background-color: #ececec;
+    
+    &:focus {
+      outline: 1px solid var(--primary-color);
+    }
+  }
+
+  &-btn {
+    padding: 7.5px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+  }
 }

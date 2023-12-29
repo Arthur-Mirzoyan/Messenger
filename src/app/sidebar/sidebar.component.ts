@@ -54,14 +54,17 @@ export class SidebarComponent {
 
   moveToChat(chat: Chat) {
     this.appService.snapShotUnsubsribe?.();
+
     this.appService.currentChat = new Chat(
       chat.id,
       chat.name,
       chat.ownerId,
-      []
+      chat.memberIds
     );
+    
     this.appService.isChatSelected = true;
     this.chatService.onChange();
+
     this.router.navigate(['/chats'], {
       queryParams: {
         name: chat.name.replace(' ', '-'),

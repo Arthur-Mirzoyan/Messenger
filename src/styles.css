@@ -2,7 +2,8 @@
   --controls-height: 50px;
   --sidebar-width: 350px;
 
-  --sidebar-bgc: #d3d0ee;
+  --primary-color: #988dfb;
+  --secondary-color: #d3d0ee;
 }
 
 * {

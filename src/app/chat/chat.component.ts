@@ -4,22 +4,23 @@ import { FormsModule } from '@angular/forms';
 import { Message } from '../message';
 import { AppService } from '../app.service';
 import { ChatService } from './chat.service';
-import { Chat } from '../chat';
+import { ChatInfoComponent } from './chat-info.component';
 
 @Component({
   selector: 'chat-comp',
   standalone: true,
   templateUrl: 'chat.component.html',
   styleUrl: 'chat.component.scss',
-  imports: [NgClass, FormsModule, NgIf],
+  imports: [NgClass, FormsModule, NgIf, ChatInfoComponent],
   providers: [ChatService],
 })
 export class ChatComponent {
   public id: string = '';
   public body: string = '';
   public messages: Message[] = [];
+  public isChatInfoPanelShown: boolean = false;
 
-  @ViewChild('messageContainer')
+  @ViewChild('messageContainer', { static: false })
   private messageContainer!: ElementRef;
 
   constructor(
@@ -33,12 +34,14 @@ export class ChatComponent {
 
   write() {
     if (this.body.trim() !== '') {
-      this.chatService.writeUserData(
-        this.appService.user.userId,
-        this.body.trim()
-      );
+      this.chatService.writeUserData(this.body);
       this.body = '';
     }
+  }
+
+  showChatInfoPanel() {
+    this.isChatInfoPanelShown = !this.isChatInfoPanelShown;
+    this.chatService.getChatMembers();
   }
 
   private scrollToBottom(): void {
