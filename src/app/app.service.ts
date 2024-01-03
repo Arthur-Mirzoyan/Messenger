@@ -11,13 +11,12 @@ export class AppService {
   public user: User = new User('', '', '');
   public currentChat: Chat = new Chat('', '', '');
   public isChatSelected = false;
+  public isChatInfoPanelShown = false;
   public snapShotUnsubsribe!: Unsubscribe;
 
-  getUser(callback: Function) {
-    if (this.user.userId) {
-      const docRef = doc(database, 'users', this.user.userId);
-
-      getDoc(docRef).then((userSnap) => {
+  getUser(userId: string, callback: Function) {
+    getDoc(doc(database, 'users', userId))
+      .then((userSnap) => {
         const userData = userSnap.data();
         const chatIds = userData?.['chats'];
         const chatDatas: Chat[] = [];
@@ -34,9 +33,10 @@ export class AppService {
         );
 
         callback(user);
+      })
+      .catch((err: any) => {
+        callback(null);
       });
-    }
-    return null;
   }
 
   getChatInfo(chatId: string, callback: Function) {

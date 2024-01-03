@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 const appRoutes: Routes = [
   { path: 'chats', component: HomeComponent },
   { path: 'login', component: RegistrationComponent },
+  { path: 'signup', component: RegistrationComponent },
   { path: '**', redirectTo: 'login' },
 ];
 

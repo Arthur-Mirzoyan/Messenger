@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Message } from '../message';
 import { AppService } from '../app.service';
@@ -18,7 +18,6 @@ export class ChatComponent {
   public id: string = '';
   public body: string = '';
   public messages: Message[] = [];
-  public isChatInfoPanelShown: boolean = false;
 
   @ViewChild('messageContainer', { static: false })
   private messageContainer!: ElementRef;
@@ -40,7 +39,8 @@ export class ChatComponent {
   }
 
   showChatInfoPanel() {
-    this.isChatInfoPanelShown = !this.isChatInfoPanelShown;
+    this.appService.isChatInfoPanelShown =
+      !this.appService.isChatInfoPanelShown;
     this.chatService.getChatMembers();
   }
 

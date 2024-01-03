@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../user';
 import { NgClass, NgIf } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
@@ -15,21 +14,19 @@ import { AppService } from '../app.service';
   imports: [FormsModule, NgClass, NgIf, SidebarComponent, ChatComponent],
 })
 export class HomeComponent {
-  protected user: User | null = null;
-
-  constructor(
-    protected appService: AppService,
-    private router: Router
-  ) {}
+  constructor(protected appService: AppService, private router: Router) {
+    console.log('consturcter')
+  }
 
   ngOnInit() {
-    this.appService.getUser((user: any) => {
-      console.log(user)
-      if (!user) this.router.navigate(['/login']);
-      else {
-        this.user = user;
-        this.appService.user = user;
-      }
-    });
+    const userId = localStorage.getItem('userId');
+
+    if (!userId) this.router.navigate(['/login']);
+    else {
+      this.appService.getUser(userId, (user: any) => {
+        if (!user) this.router.navigate(['/login']);
+        else this.appService.user = user;
+      });
+    }
   }
 }

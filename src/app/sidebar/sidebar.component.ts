@@ -45,15 +45,28 @@ export class SidebarComponent {
     } catch (err: any) {}
   }
 
+  updateChats() {
+    this.sidebarService.updateChats();
+  }
+
+  logOut() {
+    localStorage.clear();
+    this.appService.isChatSelected = false;
+    this.router.navigate(['/login']);
+  }
+
   createChat() {
-    this.sidebarService.createNewChat(
-      this.newChatName,
-      () => (this.newChatName = '')
-    );
+    if (this.newChatName.trim() !== '') {
+      this.sidebarService.createNewChat(this.newChatName.trim(), () => {
+        this.newChatName = '';
+        this.updateChats();
+      });
+    }
   }
 
   moveToChat(chat: Chat) {
     this.appService.snapShotUnsubsribe?.();
+    this.appService.isChatInfoPanelShown = false;
 
     this.appService.currentChat = new Chat(
       chat.id,
@@ -61,7 +74,7 @@ export class SidebarComponent {
       chat.ownerId,
       chat.memberIds
     );
-    
+
     this.appService.isChatSelected = true;
     this.chatService.onChange();
 

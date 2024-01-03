@@ -55,17 +55,47 @@
 
   &-create {
     display: flex;
+    align-items: center;
     gap: 5px;
+
+    &-refresh {
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+
+      &-icon {
+        width: 100%;
+        height: 100%;
+      }
+    }
 
     &-input {
       flex: 1;
       padding: 5px;
+      border-radius: 7px;
+      border: none;
+
+      &:focus {
+        outline: 2px solid var(--secondary-color);
+      }
+    }
+
+    &-btn {
+      border: none;
+      background-color: var(--secondary-color);
+      height: 100%;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
     }
   }
 
   &-container {
     display: grid;
     gap: 5px;
+
     &-btn {
       width: 100%;
       height: 35px;
@@ -76,6 +106,37 @@
       overflow: hidden;
       text-align: left;
       padding: 5px;
+      cursor: pointer;
+      background-color: var(--hover-color);
+      border: none;
+      color: white;
+      border-radius: 7px;
+      font-size: 16pxq;
+
+      &:hover {
+        background-color: var(--secondary-color);
+        color: black;
+      }
+    }
+  }
+}
+
+.footer {
+  padding: 5px;
+  height: 50px;
+
+  &-btn {
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+
+    &:hover {
+      background-color: var(--hover-color);
     }
   }
 }

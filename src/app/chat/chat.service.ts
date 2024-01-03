@@ -37,7 +37,6 @@ export class ChatService {
 
   onChange() {
     if (this.appService.currentChat.id) {
-      console.log(this.appService.currentChat);
       const chatRef = doc(database, 'chats', this.appService.currentChat.id);
 
       this.appService.snapShotUnsubsribe = onSnapshot(chatRef, (chatData) => {
@@ -67,14 +66,16 @@ export class ChatService {
   }
 
   getChatMembers() {
-    this.appService.currentChat.memberIds.forEach((memberId: string) => {
-      const memberRef = doc(database, 'users', memberId);
-      getDoc(memberRef).then((memberData) => {
-        const member = memberData.data();
-        const newMember = new User(memberId, member?.['userName']);
-        this.appService.currentChat.addUser(newMember);
+    if (!this.appService.currentChat.getMembers.length) {
+      this.appService.currentChat.memberIds.forEach((memberId: string) => {
+        const memberRef = doc(database, 'users', memberId);
+        getDoc(memberRef).then((memberData) => {
+          const member = memberData.data();
+          const newMember = new User(memberId, member?.['userName']);
+          this.appService.currentChat.addUser(newMember);
+        });
       });
-    });
+    }
   }
 
   async addChatMember(userName: string, callBack: Function) {
@@ -89,10 +90,13 @@ export class ChatService {
         .then(() => {
           updateDoc(user.ref, {
             chats: arrayUnion(this.appService.currentChat.id),
-          }).then(() => callBack(true));
+          }).then(() => {
+            let newUSer = new User(user.id, userName);
+            callBack(newUSer);
+          });
         })
         .catch(() => {
-          callBack(false);
+          callBack(null);
         });
     });
   }

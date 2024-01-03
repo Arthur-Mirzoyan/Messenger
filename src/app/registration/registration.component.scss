@@ -16,16 +16,27 @@
     font-weight: bold;
   }
 
-  &-input {
-    padding: 10px 10px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: none;
-    background-color: #ececec;
-    
-    &:focus {
-      outline: 1px solid var(--primary-color);
+  &-box {
+    display: grid;
+
+    &-input {
+      padding: 10px 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background-color: #ececec;
+
+      &:focus {
+        outline: 1px solid var(--primary-color);
+      }
     }
+    &-error {
+      justify-self: right;
+    }
+  }
+
+  &-error {
+    align-self: flex-end;
   }
 
   &-btn {
@@ -37,5 +48,20 @@
     color: white;
     cursor: pointer;
     font-weight: bold;
+
+    &:focus {
+      outline: 2px solid var(--secondary-color);
+    }
+  }
+
+  &-mode {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    color: var(--primary-color);
+
+    &:focus {
+      outline: none;
+    }
   }
 }

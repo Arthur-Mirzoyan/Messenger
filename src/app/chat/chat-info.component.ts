@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AppService } from '../app.service';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from './chat.service';
+import { User } from '../user';
 
 @Component({
   selector: 'chat-info-comp',
@@ -30,10 +31,12 @@ export class ChatInfoComponent {
   addMember() {
     this.chatService.addChatMember(
       this.newMemberUserName,
-      (isAdded: boolean) => {
+      (addedUser: User | null) => {
         this.newMemberUserName = '';
-        if (isAdded) this.closeAddMemberDialog();
-        else alert('User not found');
+        if (addedUser) {
+          this.appService.currentChat.addUser(addedUser);
+          this.closeAddMemberDialog();
+        } else alert('User not found');
       }
     );
   }

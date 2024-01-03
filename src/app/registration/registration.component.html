@@ -1,6 +1,63 @@
-<div class="reg-form" action="">
-  <legend class="reg-form-legend">Welcome Back !</legend>
-  <input [(ngModel)]="userName" class="reg-form-input" type="text" />
-  <input [(ngModel)]="password" class="reg-form-input" type="password" />
-  <button (click)="logIn()" class="reg-form-btn">Log in</button>
-</div>
+<form [formGroup]="registrationForm" class="reg-form" (submit)="submit()" #form>
+  <legend class="reg-form-legend">
+    Welcome{{ isSigningUp ? "" : " Back" }} !
+  </legend>
+  <div *ngIf="isSigningUp" class="reg-form-box">
+    <label class="reg-form-box-label">Name</label>
+    <input
+      formControlName="formName"
+      required
+      class="reg-form-box-input"
+      type="text"
+      (keyup.enter)="submit()"
+    />
+    @if(registrationForm.controls['formName'].invalid &&
+    registrationForm.controls['formName'].touched){
+    <p class="reg-form-box-error">Invalid Name</p>
+    }
+  </div>
+  <div class="reg-form-box">
+    <label class="reg-form-box-label">Username</label>
+    <input
+      formControlName="formUsername"
+      required
+      class="reg-form-box-input"
+      type="text"
+      (keyup.enter)="submit()"
+    />
+    @if(registrationForm.controls['formUsername'].invalid &&
+    registrationForm.controls['formUsername'].touched){
+    <p class="reg-form-box-error">Invalid Username</p>
+    }
+  </div>
+  <div class="reg-form-box">
+    <label class="reg-form-box-label">Password</label>
+    <input
+      formControlName="formPassword"
+      required
+      class="reg-form-box-input"
+      type="password"
+      maxlength="16"
+      (keyup.enter)="submit()"
+    />
+    @if(registrationForm.controls['formPassword'].invalid &&
+    registrationForm.controls['formPassword'].touched){
+    <p class="reg-form-box-error">Invalid Password</p>
+    }
+  </div>
+  @if(submitionErrorOccures &&
+  (registrationForm.controls['formUsername'].touched ||
+  registrationForm.controls['formPassword'].touched)) {
+  <p class="reg-form-error">
+    {{ isSigningUp ? "User already exists" : "User not found" }}
+  </p>
+  }
+  <button class="reg-form-btn">{{ isSigningUp ? "Sing up" : "Log in" }}</button>
+  <button type="button" (click)="changeMode()" class="reg-form-mode">
+    {{
+      isSigningUp
+        ? "Already have account? Log in!"
+        : "Don't have account? Create one!"
+    }}
+  </button>
+</form>
