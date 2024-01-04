@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { User } from './user';
 import { Unsubscribe, doc, getDoc } from 'firebase/firestore';
 import { database } from './database/connection';
 import { Chat } from './chat';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,11 @@ export class AppService {
   public isChatSelected = false;
   public isChatInfoPanelShown = false;
   public snapShotUnsubsribe!: Unsubscribe;
+  public isBrowser: boolean = false;
+
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   getUser(userId: string, callback: Function) {
     getDoc(doc(database, 'users', userId))

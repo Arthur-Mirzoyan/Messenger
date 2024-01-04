@@ -7,7 +7,11 @@
       />
     </div>
     <p class="profile-userName">{{ appService.user.userName }}</p>
-    <img class="profile-pen" src="assets/svg/pen-write.svg" />
+    <img
+      (click)="colorModeChange()"
+      class="profile-pen"
+      src="{{ colorService.icon }}"
+    />
   </div>
   <div class="chats">
     <div class="chats-create">
@@ -21,6 +25,9 @@
       @for (chat of appService.user.chats; track $index) {
       <button (click)="moveToChat(chat)" class="chats-container-btn">
         {{ chat.name }}
+      </button>
+      <button class="chats-container-bin">
+        <img class="chats-container-bin-img" src="assets/svg/bin.svg" />
       </button>
       }
     </div>

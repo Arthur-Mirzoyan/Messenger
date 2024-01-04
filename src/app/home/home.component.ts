@@ -14,12 +14,12 @@ import { AppService } from '../app.service';
   imports: [FormsModule, NgClass, NgIf, SidebarComponent, ChatComponent],
 })
 export class HomeComponent {
-  constructor(protected appService: AppService, private router: Router) {
-    console.log('consturcter')
-  }
+  constructor(protected appService: AppService, private router: Router) {}
 
   ngOnInit() {
-    const userId = localStorage.getItem('userId');
+    const userId = this.appService.isBrowser
+      ? localStorage.getItem('userId')
+      : null;
 
     if (!userId) this.router.navigate(['/login']);
     else {

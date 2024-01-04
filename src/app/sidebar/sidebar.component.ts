@@ -5,6 +5,7 @@ import { Chat } from '../chat';
 import { FormsModule } from '@angular/forms';
 import { SidebarService } from './sidebar.service';
 import { ChatService } from '../chat/chat.service';
+import { ColorService } from '../colors.service';
 
 @Component({
   selector: 'sidebar-comp',
@@ -12,13 +13,14 @@ import { ChatService } from '../chat/chat.service';
   templateUrl: 'sidebar.component.html',
   styleUrl: 'sidebar.component.scss',
   imports: [FormsModule],
-  providers: [SidebarService, ChatService],
+  providers: [SidebarService, ChatService, ColorService],
 })
 export class SidebarComponent {
   public newChatName: string = '';
 
   constructor(
     protected appService: AppService,
+    protected colorService: ColorService,
     private sidebarService: SidebarService,
     private chatService: ChatService,
     private router: Router
@@ -28,19 +30,29 @@ export class SidebarComponent {
     this.appService.snapShotUnsubsribe?.();
 
     const userJSON = JSON.stringify(this.appService.user);
-    localStorage.setItem('###', userJSON);
+    if (this.appService.isBrowser) {
+      localStorage.setItem('###', userJSON);
+      sessionStorage.setItem(
+        'currentColorMode',
+        this.colorService.getCurrentMode
+      );
+    }
     this.appService.isChatSelected = false;
   }
 
   @HostListener('window:load', ['$event']) onloadHandler() {
-    const userJSON = localStorage.getItem('###') || '';
+    const userJSON = this.appService.isBrowser
+      ? localStorage.getItem('###') || ''
+      : '';
+
+    this.colorService.updateColorMode();
     this.router.navigate(['/chats'], {
       queryParams: {
         name: null,
       },
     });
     try {
-      localStorage.removeItem('###');
+      if (this.appService.isBrowser) localStorage.removeItem('###');
       this.appService.user = JSON.parse(userJSON);
     } catch (err: any) {}
   }
@@ -50,7 +62,7 @@ export class SidebarComponent {
   }
 
   logOut() {
-    localStorage.clear();
+    if (this.appService.isBrowser) localStorage.clear();
     this.appService.isChatSelected = false;
     this.router.navigate(['/login']);
   }
@@ -83,5 +95,9 @@ export class SidebarComponent {
         name: chat.name.replace(' ', '-'),
       },
     });
+  }
+
+  colorModeChange() {
+    this.colorService.changeColorMode();
   }
 }

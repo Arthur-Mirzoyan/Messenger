@@ -12,6 +12,7 @@
 
 .group {
   border-bottom: 2px solid gray;
+  background-color: #dedcf2;
 
   &-peopleIcon {
     width: 25px;
@@ -25,7 +26,6 @@
   gap: 15px;
   padding: 2px;
   overflow-y: auto;
-  background: white;
   height: 100%;
 
   &::-webkit-scrollbar {
@@ -72,6 +72,7 @@
 
 .controls {
   display: flex;
+  background-color: #dedcf2;
   height: var(--controls-height);
   gap: 5px;
   justify-content: space-between;
@@ -81,6 +82,12 @@
     flex: 1;
     padding: 5px 10px;
     border-radius: 20px;
+    border: none;
+    filter: drop-shadow(0 0 2px gray);
+
+    &:focus {
+      outline: 2px solid var(--primary-color);
+    }
   }
 
   &-btn {

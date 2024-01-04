@@ -75,7 +75,8 @@ export class RegistrationComponent {
     );
 
     if (user) {
-      localStorage.setItem('userId', user.userId);
+      if (this.appService.isBrowser)
+        localStorage.setItem('userId', user.userId);
       this.appService.user.userId = user.userId;
       this.router.navigate(['/chats']);
     } else {
