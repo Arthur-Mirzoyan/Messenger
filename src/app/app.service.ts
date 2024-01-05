@@ -34,6 +34,7 @@ export class AppService {
         const user = new User(
           userSnap.id,
           userData?.['userName'],
+          userData?.['name'],
           userData?.['password'],
           chatDatas
         );

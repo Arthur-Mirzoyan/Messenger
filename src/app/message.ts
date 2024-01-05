@@ -22,6 +22,7 @@ export class Message {
       this.sender = new User(
         this.senderId,
         user['userName'],
+        user['name'],
         user['password'],
         user['chats']
       );

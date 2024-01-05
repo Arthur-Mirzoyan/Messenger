@@ -7,7 +7,7 @@ export class ColorService {
     ? document.querySelector(':root')
     : undefined;
 
-  private currentMode!: string;
+  private currentMode: string = 'day';
   private colors = {
     day: {
       '--primary-color': '#988dfb',
@@ -31,7 +31,7 @@ export class ColorService {
 
   constructor(private appService: AppService) {
     this.currentMode = this.appService.isBrowser
-      ? sessionStorage.getItem('currentColorMode') || ''
+      ? sessionStorage.getItem('currentColorMode') || 'day'
       : 'day';
   }
 

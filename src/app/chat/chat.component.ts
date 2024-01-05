@@ -33,7 +33,7 @@ export class ChatComponent {
 
   write() {
     if (this.body.trim() !== '') {
-      this.chatService.writeUserData(this.body);
+      this.chatService.addMessage(this.body);
       this.body = '';
     }
   }

@@ -1,11 +1,11 @@
 <aside class="sidebar">
   <div class="profile">
-    <div class="profile-photo">
+    <button (click)="openPhotoChangeDialog()" class="profile-photo">
       <img
         class="profile-photo-img"
         src="assets/img/no-profile-picture-icon-male.jpg"
       />
-    </div>
+    </button>
     <p class="profile-userName">{{ appService.user.userName }}</p>
     <img
       (click)="colorModeChange()"
@@ -26,7 +26,7 @@
       <button (click)="moveToChat(chat)" class="chats-container-btn">
         {{ chat.name }}
       </button>
-      <button class="chats-container-bin">
+      <button (click)="deleteChat(chat.id)" class="chats-container-bin">
         <img class="chats-container-bin-img" src="assets/svg/bin.svg" />
       </button>
       }
@@ -36,3 +36,4 @@
     <button (click)="logOut()" class="footer-btn">Log out</button>
   </div>
 </aside>
+<photo-change-dialog #photoChangeDialog></photo-change-dialog>
