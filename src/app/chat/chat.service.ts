@@ -62,12 +62,14 @@ export class ChatService {
     if (!this.appService.currentChat.getMembers.length) {
       this.appService.currentChat.memberIds.forEach((memberId: string) => {
         const memberRef = doc(database, 'users', memberId);
-        getDoc(memberRef).then((memberData) => {
+        getDoc(memberRef).then((memberData: any) => {
           const member = memberData.data();
           const newMember = new User(
             memberId,
-            member?.['userName'],
-            member?.['name']
+            member?.['name'],
+            member?.['surname'],
+            member?.['username'],
+            member?.['gender']
           );
           this.appService.currentChat.addUser(newMember);
         });
@@ -76,7 +78,7 @@ export class ChatService {
   }
 
   updateChats() {
-    getDoc(doc(database, 'users', this.appService.user.userId)).then(
+    getDoc(doc(database, 'users', this.appService.user.id)).then(
       (userData) => {
         const chatIds = userData.data()?.['chats'];
 
@@ -101,11 +103,11 @@ export class ChatService {
   createNewChat(chatName: string, callback: Function) {
     addDoc(this.chatsCollectionReference, {
       name: chatName,
-      ownerId: this.appService.user.userId,
+      ownerId: this.appService.user.id,
       messages: [],
-      members: [this.appService.user.userId],
+      members: [this.appService.user.id],
     }).then((newChat) => {
-      updateDoc(doc(database, 'users', this.appService.user.userId), {
+      updateDoc(doc(database, 'users', this.appService.user.id), {
         chats: arrayUnion(newChat.id),
       }).then(() => {
         callback();
@@ -166,7 +168,7 @@ export class ChatService {
   async addMessage(body: string) {
     const messageToAdd = await addDoc(this.messagesCollectionReference, {
       body: body.trim(),
-      senderId: this.appService.user.userId,
+      senderId: this.appService.user.id,
       createdAt: Date.now(),
     });
 
@@ -175,24 +177,31 @@ export class ChatService {
     });
   }
 
-  async addChatMember(userName: string, callBack: Function) {
+  async addChatMember(username: string, callBack: Function) {
     const q = query(
       this.usersCollectionReference,
-      where('userName', '==', userName)
+      where('username', '==', username)
     );
     const response = await getDocs(q);
 
-    response.forEach((user) => {
+    response.forEach((userSnap) => {
       const chatRef = doc(database, 'chats', this.appService.currentChat.id);
       updateDoc(chatRef, {
-        members: arrayUnion(user.id),
+        members: arrayUnion(userSnap.id),
       })
         .then(() => {
-          updateDoc(user.ref, {
+          updateDoc(userSnap.ref, {
             chats: arrayUnion(this.appService.currentChat.id),
           }).then(() => {
-            let newUSer = new User(user.id, userName, user.data()?.['name']);
-            callBack(newUSer);
+            const userData = userSnap.data();
+            const newUser = new User(
+              userSnap.id,
+              userData?.['name'],
+              userData?.['surname'],
+              userData?.['username'],
+              userData?.['gender']
+            );
+            callBack(newUser);
           });
         })
         .catch(() => {

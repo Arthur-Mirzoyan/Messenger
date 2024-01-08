@@ -17,7 +17,7 @@ export class PhotoChangeDialog {
 
   public photoInput = new FormControl('photoInput');
   public nameInput = new FormControl('nameInput');
-  public userNameInput = new FormControl('userNameInput');
+  public usernameInput = new FormControl('usernameInput');
 
   constructor(protected appService: AppService) {}
 
@@ -50,7 +50,7 @@ export class PhotoChangeDialog {
     console.log(
       this.photoInput.dirty,
       this.nameInput.dirty,
-      this.userNameInput.dirty
+      this.usernameInput.dirty
     );
   }
 }

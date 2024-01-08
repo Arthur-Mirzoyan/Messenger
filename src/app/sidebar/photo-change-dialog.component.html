@@ -32,7 +32,7 @@
       <label class="panel-field-label">Username</label>
       <input
         class="panel-field-input"
-        formControlname="userNameInput"
+        formControlname="usernameInput"
         type="text"
       />
       <button class="panel-field-btn">
@@ -42,7 +42,7 @@
     <div class="panel-controls">
       <button
         class="panel-controls-btn save"
-        [disabled]="photoInput.dirty || nameInput.dirty || userNameInput.dirty"
+        [disabled]="photoInput.dirty || nameInput.dirty || usernameInput.dirty"
         (click)="updateUserData()"
       >
         Save

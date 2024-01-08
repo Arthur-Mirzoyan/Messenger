@@ -9,14 +9,14 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AppService } from '../app.service';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'registration-comp',
   standalone: true,
   templateUrl: 'registration.component.html',
   styleUrl: 'registration.component.scss',
-  imports: [FormsModule, ReactiveFormsModule, NgIf, RouterLink],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, RouterLink, NgClass],
   providers: [RegistrationService],
 })
 export class RegistrationComponent {
@@ -31,6 +31,8 @@ export class RegistrationComponent {
   ) {
     this.registrationForm = new FormGroup({
       formName: new FormControl('', [Validators.required]),
+      formSurname: new FormControl('', [Validators.required]),
+      formGender: new FormControl('', [Validators.required]),
       formUsername: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
@@ -75,9 +77,8 @@ export class RegistrationComponent {
     );
 
     if (user) {
-      if (this.appService.isBrowser)
-        localStorage.setItem('userId', user.userId);
-      this.appService.user.userId = user.userId;
+      if (this.appService.isBrowser) localStorage.setItem('userId', user.id);
+      this.appService.user.id = user.id;
       this.router.navigate(['/chats']);
     } else {
       this.submitionErrorOccures = true;
@@ -87,8 +88,7 @@ export class RegistrationComponent {
   private async singUp() {
     if (this.registrationForm.controls['formName'].valid) {
       let user = await this.registrationService.userExists(
-        this.registrationForm.controls['formUsername'].value,
-        this.registrationForm.controls['formPassword'].value
+        this.registrationForm.controls['formUsername'].value
       );
 
       if (user) this.submitionErrorOccures = true;
@@ -96,6 +96,8 @@ export class RegistrationComponent {
         this.registrationService
           .createUser(
             this.registrationForm.controls['formName'].value,
+            this.registrationForm.controls['formSurname'].value,
+            this.registrationForm.controls['formGender'].value,
             this.registrationForm.controls['formUsername'].value,
             this.registrationForm.controls['formPassword'].value
           )

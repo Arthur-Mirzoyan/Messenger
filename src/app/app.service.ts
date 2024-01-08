@@ -9,7 +9,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class AppService {
-  public user: User = new User('', '', '');
+  public user: User = new User('', '', '', '');
   public currentChat: Chat = new Chat('', '', '');
   public isChatSelected = false;
   public isChatInfoPanelShown = false;
@@ -33,8 +33,10 @@ export class AppService {
 
         const user = new User(
           userSnap.id,
-          userData?.['userName'],
           userData?.['name'],
+          userData?.['surname'],
+          userData?.['username'],
+          userData?.['gender'],
           userData?.['password'],
           chatDatas
         );

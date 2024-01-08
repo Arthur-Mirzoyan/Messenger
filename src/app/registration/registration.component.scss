@@ -19,6 +19,34 @@
   &-box {
     display: grid;
 
+    &-label {
+      padding-left: 10px;
+    }
+
+    &-radio {
+      display: flex;
+      justify-content: space-evenly;
+      padding: 10px 10px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: none;
+      background-color: #ececec;
+
+      &-box {
+        display: flex;
+        gap: 10px;
+        cursor: pointer;
+
+        &-input {
+          accent-color: var(--primary-color);
+
+          &:focus {
+            outline: 1px solid var(--primary-color);
+          }
+        }
+      }
+    }
+
     &-input {
       padding: 10px 10px;
       font-size: 16px;
@@ -30,6 +58,7 @@
         outline: 1px solid var(--primary-color);
       }
     }
+
     &-error {
       justify-self: right;
     }
@@ -64,4 +93,9 @@
       outline: none;
     }
   }
+}
+
+.invalid-input {
+  border: 2px solid red;
+  background-color: rgba($color: #ff0000, $alpha: 0.25);
 }

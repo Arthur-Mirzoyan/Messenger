@@ -2,49 +2,121 @@
   <legend class="reg-form-legend">
     Welcome{{ isSigningUp ? "" : " Back" }} !
   </legend>
+
   <div *ngIf="isSigningUp" class="reg-form-box">
     <label class="reg-form-box-label">Name</label>
     <input
-      formControlName="formName"
       required
-      class="reg-form-box-input"
       type="text"
-      (keyup.enter)="submit()"
+      formControlName="formName"
+      class="reg-form-box-input"
+      [ngClass]="{
+        'invalid-input':
+          registrationForm.controls['formName'].invalid &&
+          registrationForm.controls['formName'].touched
+      }"
     />
     @if(registrationForm.controls['formName'].invalid &&
     registrationForm.controls['formName'].touched){
     <p class="reg-form-box-error">Invalid Name</p>
     }
   </div>
+
+  <div *ngIf="isSigningUp" class="reg-form-box">
+    <label class="reg-form-box-label">Surname</label>
+    <input
+      required
+      type="text"
+      formControlName="formSurname"
+      class="reg-form-box-input"
+      [ngClass]="{
+        'invalid-input':
+          registrationForm.controls['formSurname'].invalid &&
+          registrationForm.controls['formSurname'].touched
+      }"
+    />
+    @if(registrationForm.controls['formSurname'].invalid &&
+    registrationForm.controls['formSurname'].touched){
+    <p class="reg-form-box-error">Invalid Surname</p>
+    }
+  </div>
+
+  <div *ngIf="isSigningUp" class="reg-form-box">
+    <label class="reg-form-box-label">Gender</label>
+    <div
+      class="reg-form-box-radio"
+      [ngClass]="{
+        'invalid-input':
+          registrationForm.controls['formGender'].invalid &&
+          registrationForm.controls['formGender'].touched
+      }"
+    >
+      <label class="reg-form-box-radio-box">
+        <input
+          required=""
+          type="radio"
+          formControlName="formGender"
+          class="reg-form-box-radio-box-input"
+          value="male"
+        />
+        Male
+      </label>
+      <label class="reg-form-box-radio-box">
+        <input
+          required=""
+          type="radio"
+          formControlName="formGender"
+          class="reg-form-box-radio-box-input"
+          value="female"
+        />
+        Female
+      </label>
+    </div>
+    @if(registrationForm.controls['formGender'].invalid &&
+    registrationForm.controls['formGender'].touched){
+    <p class="reg-form-box-error">Invalid Gender</p>
+    }
+  </div>
+
   <div class="reg-form-box">
     <label class="reg-form-box-label">Username</label>
     <input
-      formControlName="formUsername"
       required
-      class="reg-form-box-input"
       type="text"
-      (keyup.enter)="submit()"
+      formControlName="formUsername"
+      class="reg-form-box-input"
+      [ngClass]="{
+        'invalid-input':
+          registrationForm.controls['formUsername'].invalid &&
+          registrationForm.controls['formUsername'].touched
+      }"
     />
     @if(registrationForm.controls['formUsername'].invalid &&
     registrationForm.controls['formUsername'].touched){
     <p class="reg-form-box-error">Invalid Username</p>
     }
   </div>
+
   <div class="reg-form-box">
     <label class="reg-form-box-label">Password</label>
     <input
-      formControlName="formPassword"
       required
-      class="reg-form-box-input"
       type="password"
+      formControlName="formPassword"
+      class="reg-form-box-input"
+      [ngClass]="{
+        'invalid-input':
+          registrationForm.controls['formPassword'].invalid &&
+          registrationForm.controls['formPassword'].touched
+      }"
       maxlength="16"
-      (keyup.enter)="submit()"
     />
     @if(registrationForm.controls['formPassword'].invalid &&
     registrationForm.controls['formPassword'].touched){
     <p class="reg-form-box-error">Invalid Password</p>
     }
   </div>
+
   @if(submitionErrorOccures &&
   (registrationForm.controls['formUsername'].touched ||
   registrationForm.controls['formPassword'].touched)) {
@@ -52,6 +124,7 @@
     {{ isSigningUp ? "User already exists" : "User not found" }}
   </p>
   }
+
   <button class="reg-form-btn">{{ isSigningUp ? "Sing up" : "Log in" }}</button>
   <button type="button" (click)="changeMode()" class="reg-form-mode">
     {{

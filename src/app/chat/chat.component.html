@@ -14,14 +14,14 @@
       <div
         class="messages-box"
         [ngClass]="{
-          'messages-box-sender': msg?.senderId === appService.user.userId
+          'messages-box-sender': msg?.senderId === appService.user.id
         }"
       >
         <p
-          *ngIf="msg?.senderId !== appService.user.userId"
+          *ngIf="msg?.senderId !== appService.user.id"
           class="messages-box-senderUser"
         >
-          {{ msg?.sender?.["userName"] }}
+          {{ msg?.sender?.["username"] }}
         </p>
         <p class="messages-box-body">{{ msg?.body }}</p>
       </div>
