@@ -1,6 +1,6 @@
 <aside class="sidebar">
   <div class="profile">
-    <button (click)="openPhotoChangeDialog()" class="profile-photo">
+    <button (click)="openUserUpdateDialog()" class="profile-photo">
       <img
         class="profile-photo-img"
         src="assets/img/no-profile-picture-icon-male.jpg"
@@ -36,4 +36,8 @@
     <button (click)="logOut()" class="footer-btn">Log out</button>
   </div>
 </aside>
-<photo-change-dialog #photoChangeDialog></photo-change-dialog>
+<user-update-comp
+  *ngIf="isUserUpdateDialogShown"
+  (onClose)="closeUserUpdateDialog()"
+  #userUpdateDialog
+></user-update-comp>

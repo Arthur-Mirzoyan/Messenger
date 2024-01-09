@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppService } from '../app.service';
 import { NgClass, NgIf } from '@angular/common';
 
@@ -16,7 +16,7 @@ import { NgClass, NgIf } from '@angular/common';
   standalone: true,
   templateUrl: 'registration.component.html',
   styleUrl: 'registration.component.scss',
-  imports: [FormsModule, ReactiveFormsModule, NgIf, RouterLink, NgClass],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgClass],
   providers: [RegistrationService],
 })
 export class RegistrationComponent {

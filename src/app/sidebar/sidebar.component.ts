@@ -6,18 +6,20 @@ import { FormsModule } from '@angular/forms';
 import { SidebarService } from './sidebar.service';
 import { ChatService } from '../chat/chat.service';
 import { ColorService } from '../colors.service';
-import { PhotoChangeDialog } from './photo-change-dialog.component';
+import { UserUpdateComponent } from './user-update.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'sidebar-comp',
   standalone: true,
   templateUrl: 'sidebar.component.html',
   styleUrl: 'sidebar.component.scss',
-  imports: [FormsModule, PhotoChangeDialog],
+  imports: [FormsModule, UserUpdateComponent, NgIf],
   providers: [SidebarService, ChatService, ColorService],
 })
 export class SidebarComponent {
   public newChatName: string = '';
+  public isUserUpdateDialogShown: boolean = false;
 
   constructor(
     protected appService: AppService,
@@ -58,12 +60,17 @@ export class SidebarComponent {
     } catch (err: any) {}
   }
 
-  @ViewChild('photoChangeDialog', { static: false }) photoChangeDialog:
-    | PhotoChangeDialog
+  @ViewChild('userUpdateDialog', { static: false }) userUpdateDialog:
+    | UserUpdateComponent
     | undefined;
 
-  openPhotoChangeDialog() {
-    this.photoChangeDialog?.open();
+  openUserUpdateDialog() {
+    this.isUserUpdateDialogShown = true;
+    setTimeout(() => this.userUpdateDialog?.open());
+  }
+
+  closeUserUpdateDialog() {
+    this.isUserUpdateDialogShown = false;
   }
 
   updateChats() {

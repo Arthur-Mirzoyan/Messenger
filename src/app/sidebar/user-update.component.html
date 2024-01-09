@@ -1,5 +1,5 @@
-<dialog #photoChangeDialog class="dialog">
-  <div *ngIf="isOpen" class="panel">
+<dialog #dialog>
+  <form class="panel" [formGroup]="dialogForm" (ngSubmit)="updateUserData()">
     <div class="panel-selectedPhoto">
       <img
         class="panel-selectedPhoto-img"
@@ -14,45 +14,52 @@
       #fileInput
       class="panel-input"
       type="file"
-      formControlname="photoInput"
       (change)="showSelectedPhoto()"
     />
     <div class="panel-field">
       <label class="panel-field-label">Name</label>
       <input
+        required
+        [readOnly]="isFormNameInputReadonly"
+        formControlName="formName"
         type="text"
         class="panel-field-input"
-        formControlname="nameInput"
       />
-      <button class="panel-field-btn">
+      <button
+        type="button"
+        class="panel-field-btn"
+        (click)="changeCurrentState('formName')"
+      >
         <img class="panel-field-btn-img" src="assets/svg/pen-write.svg" />
       </button>
     </div>
     <div class="panel-field">
       <label class="panel-field-label">Username</label>
       <input
+        required
+        [readOnly]="isFormUsernameInputReadonly"
+        formControlName="formUsername"
         class="panel-field-input"
-        formControlname="usernameInput"
         type="text"
       />
-      <button class="panel-field-btn">
+      <button
+        type="button"
+        class="panel-field-btn"
+        (click)="changeCurrentState('formUsename')"
+      >
         <img class="panel-field-btn-img" src="assets/svg/pen-write.svg" />
       </button>
     </div>
     <div class="panel-controls">
       <button
+        type="submit"
         class="panel-controls-btn save"
-        [disabled]="photoInput.dirty || nameInput.dirty || usernameInput.dirty"
-        (click)="updateUserData()"
       >
         Save
       </button>
-      <button
-        class="panel-controls-btn cancel"
-        (click)="closePhotoChangeDialog()"
-      >
+      <button type="button" class="panel-controls-btn cancel" (click)="close()">
         Cancel
       </button>
     </div>
-  </div>
+  </form>
 </dialog>
